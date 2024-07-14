@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jailerecord/constants/globalvariables.dart';
 import 'package:http/http.dart' as http;
 import 'package:jailerecord/constants/utils.dart';
+import 'package:jailerecord/features/auth/screens/signup.dart';
 import 'package:jailerecord/features/auth/screens/signin.dart';
 
 class AuthService {
@@ -20,7 +21,8 @@ class AuthService {
       final UserCredential userCred = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       final uid = userCred.user!.uid;
-      http.Response res = await http.post(Uri.parse('$uri/api/signup'),
+      print('rrrrrrrre');
+      http.Response res = await http.post(Uri.parse('$uri/addNewUser'),
           body: jsonEncode({
             "name": name,
             "role": role,
@@ -32,6 +34,9 @@ class AuthService {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8'
           });
+
+      print('$uri/addNewUser');
+      print('qenrojf');
       httpHandler(
           res: res,
           context: context,
@@ -42,6 +47,7 @@ class AuthService {
                 MaterialPageRoute(builder: (context) => SigninScreen()));
           });
     } catch (e) {
+      print('erreeeeeeeeeeeeeerrrrrrrr');
       showSnackBar(context, e.toString());
     }
   }
@@ -51,10 +57,14 @@ class AuthService {
       required String email,
       required String password,
       required String role}) async {
-    if (email.isNotEmpty && password.isNotEmpty) {
-      final UserCredential userCred = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      final uid = userCred.user!.uid;
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        final UserCredential userCred = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+        final uid = userCred.user!.uid;
+      }
+    } catch (e) {
+      showSnackBar(context, e.toString());
     }
     // if (role == 'police') {
     // } else if (role == 'laywer') {}

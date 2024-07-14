@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:jailerecord/features/auth/screens/signup.dart';
 import 'package:jailerecord/features/auth/screens/signin.dart';
 import 'package:jailerecord/features/police/screens/policeHome.dart';
 import 'package:jailerecord/provider/laywerProvider.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SigninScreen(),
+      home: const SignupScreen(),
     );
   }
 }

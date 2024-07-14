@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jailerecord/features/auth/screens/Police/policeHome.dart';
+import 'package:jailerecord/features/police/screens/policeHome.dart';
 
 void main() {
   runApp(const MyApp());

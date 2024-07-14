@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jailerecord/features/auth/screens/Police/casedisplay.dart';
+import 'package:jailerecord/features/police/screens/casedisplay.dart';
 
 class PoliceHome extends StatefulWidget {
   const PoliceHome({super.key});

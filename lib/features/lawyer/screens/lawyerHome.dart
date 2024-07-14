@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:jailerecord/features/police/screens/casedisplay.dart';
 
-class PoliceHome extends StatefulWidget {
-  const PoliceHome({super.key});
+class LawyerHome extends StatefulWidget {
+  const LawyerHome({super.key});
 
   @override
-  State<PoliceHome> createState() => _PoliceHomeState();
+  State<LawyerHome> createState() => _LawyerHomeState();
 }
 
-class _PoliceHomeState extends State<PoliceHome> {
+class _LawyerHomeState extends State<LawyerHome> {
   final Map<String, dynamic> _jsonData = {
     "msg": "Successful",
     "data": [
@@ -120,23 +120,6 @@ class _PoliceHomeState extends State<PoliceHome> {
               ),
             );
           },
-        ),
-      ),
-      floatingActionButton: Container(
-        alignment: Alignment.bottomCenter,
-        padding: const EdgeInsets.only(bottom: 30.0),
-        child: ElevatedButton(
-          onPressed: () {
-            // onclick
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 83, 135, 232),
-            padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 16),
-          ),
-          child: const Text(
-            'Add Case',
-            style: TextStyle(fontSize: 18, color: Colors.white),
-          ),
         ),
       ),
       backgroundColor: Colors.white,

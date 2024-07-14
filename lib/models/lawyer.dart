@@ -2,7 +2,7 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Lawyer {
-  final String id;
+  final int id;
   final String name;
   final String contact;
   final String emailId;
@@ -27,7 +27,7 @@ class Lawyer {
 
   factory Lawyer.fromMap(Map<String, dynamic> map) {
     return Lawyer(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       contact: map['contact'] as String,
       emailId: map['emailId'] as String,

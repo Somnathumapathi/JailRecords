@@ -9,6 +9,11 @@ class PoliceHome extends StatefulWidget {
 }
 
 class _PoliceHomeState extends State<PoliceHome> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final Map<String, dynamic> _jsonData = {
     "msg": "Successful",
     "data": [

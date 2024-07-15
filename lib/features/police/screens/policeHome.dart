@@ -83,7 +83,8 @@ class _PoliceHomeState extends State<PoliceHome> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cases'),
+        title: const Text('Cases', style: TextStyle(color: Colors.white)),
+        backgroundColor: Color.fromARGB(255, 83, 135, 232),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -91,29 +92,60 @@ class _PoliceHomeState extends State<PoliceHome> {
           itemCount: cases.length,
           itemBuilder: (context, index) {
             var caseData = cases[index];
-            return ListTile(
-              title:
-                  Text('Case ${index + 1}: ${caseData['Prisoners']['name']}'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CaseDetailsPage(
-                        caseData: caseData, caseIndex: index + 1),
+            return Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 1.0),
+                borderRadius: BorderRadius.circular(6.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: const Offset(0, 5),
                   ),
-                );
-              },
+                ],
+              ),
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ListTile(
+                title: Text(
+                  'Case ${index + 1}: ${caseData['Prisoners']['name']}',
+                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                ),
+                trailing: const Icon(Icons.arrow_forward, color: Colors.black),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CaseDetailsPage(
+                          caseData: caseData, caseIndex: index + 1),
+                    ),
+                  );
+                },
+              ),
             );
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // This is the add New case button
-        },
-        tooltip: 'Add new case',
-        child: const Icon(Icons.add),
+      floatingActionButton: Container(
+        alignment: Alignment.bottomCenter,
+        padding: const EdgeInsets.only(bottom: 30.0),
+        child: ElevatedButton(
+          onPressed: () {
+            // onclick
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 83, 135, 232),
+            padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 16),
+          ),
+          child: const Text(
+            'Add Case',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
       ),
+      backgroundColor: Colors.white,
     );
   }
 }
+

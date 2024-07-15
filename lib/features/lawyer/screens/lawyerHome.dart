@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jailerecord/features/auth/services/auth_service.dart';
 import 'package:jailerecord/features/police/screens/casedisplay.dart';
 
 class LawyerHome extends StatefulWidget {
@@ -80,6 +81,9 @@ class _LawyerHomeState extends State<LawyerHome> {
       appBar: AppBar(
         title: const Text('Cases', style: TextStyle(color: Colors.white)),
         backgroundColor: Color.fromARGB(255, 83, 135, 232),
+        actions: [TextButton.icon(onPressed: () {
+          AuthService.signOut(context: context);
+        }, label: Text('Sign Out'), icon: Icon(Icons.exit_to_app),)],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:jailerecord/constants/globalvariables.dart';
 import 'package:http/http.dart' as http;
 import 'package:jailerecord/constants/utils.dart';
@@ -65,7 +66,7 @@ class AuthService {
         final UserCredential userCred = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
         final uid = userCred.user!.uid;
-        http.Response res = await http.get(Uri.parse('$uri/getUser?uid= $uid'),
+        http.Response res = await http.get(Uri.parse('$uri/getUser?uid=$uid'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8'
             });
@@ -77,20 +78,20 @@ class AuthService {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('uid', uid);
               if (jsonDecode(res.body)['role'] == 'police') {
-                final police = Police.fromMap(jsonDecode(res.body)['data']);
+                final police = Police.fromMap(jsonDecode(res.body)['data'][0]);
                 Provider.of<PoliceProvider>(context, listen: false)
                     .setPolice(police);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => PoliceHome()));
               } else if (jsonDecode(res.body)['role'] == 'lawyer') {
-                final lawyer = Lawyer.fromMap(jsonDecode(res.body)['data']);
+                final lawyer = Lawyer.fromMap(jsonDecode(res.body)['data'][0]);
                 Provider.of<LawyerProvider>(context, listen: false)
                     .setLawyer(lawyer);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LawyerHomePage()));
+                    MaterialPageRoute(builder: (context) => LawyerHome()));
               }
 
-              showSnackBar(context, 'Successful');
+              // showSnackBar(context, 'Successful');
             });
       }
     } catch (e) {
@@ -98,7 +99,9 @@ class AuthService {
     }
   }
 
-  static void signOut() {
+  static void signOut({required BuildContext context}) {
     FirebaseAuth.instance.signOut();
+    Navigator.popUntil(context, (route) => false,);
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> SigninScreen()));
   }
 }

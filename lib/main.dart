@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jailerecord/features/auth/screens/signup.dart';
 import 'package:jailerecord/features/auth/screens/signin.dart';
+import 'package:jailerecord/features/lawyer/screens/lawyerHome.dart';
 import 'package:jailerecord/features/police/screens/policeHome.dart';
 import 'package:jailerecord/provider/laywerProvider.dart';
 import 'package:jailerecord/provider/policeProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,13 +17,26 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => LawyerProvider()),
     ChangeNotifierProvider(create: (context) => PoliceProvider())
-  ], child: const MyApp()));
+  ], child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+   MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  late SharedPreferences prefs;
+  String? role;
+  @override
+  void initState() {
+    // prefs = await SharedPreferences.getInstance();
+    
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,7 +60,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PoliceHome(),
+      home: const SigninScreen(),
     );
   }
 }

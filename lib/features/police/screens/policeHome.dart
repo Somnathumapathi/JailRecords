@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:jailerecord/features/auth/services/auth_service.dart';
+import 'package:jailerecord/features/police/screens/addcase.dart';
 import 'package:jailerecord/features/police/screens/casedisplay.dart';
+import 'package:jailerecord/features/police/services/policeservices.dart';
+
+import '../../../models/case.dart';
 
 class PoliceHome extends StatefulWidget {
   const PoliceHome({super.key});
@@ -9,11 +14,21 @@ class PoliceHome extends StatefulWidget {
 }
 
 class _PoliceHomeState extends State<PoliceHome> {
+
+  
   @override
   void initState() {
+    getAllCases();
     super.initState();
   }
 
+  List<Case>? allCases;
+getAllCases()async {
+  allCases = await PoliceServices.getAllCases(context: context);
+  setState(() {
+    
+  });
+}
   final Map<String, dynamic> _jsonData = {
     "msg": "Successful",
     "data": [
@@ -83,8 +98,11 @@ class _PoliceHomeState extends State<PoliceHome> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cases', style: TextStyle(color: Colors.white)),
+        title: const Text('Cases', style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
         backgroundColor: Color.fromARGB(255, 83, 135, 232),
+        actions: [TextButton.icon(onPressed: () {
+          AuthService.signOut(context: context);
+        }, label: Text('Sign Out'), icon: Icon(Icons.exit_to_app),)]
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -132,7 +150,7 @@ class _PoliceHomeState extends State<PoliceHome> {
         padding: const EdgeInsets.only(bottom: 30.0),
         child: ElevatedButton(
           onPressed: () {
-            // onclick
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddForm()));
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(255, 83, 135, 232),

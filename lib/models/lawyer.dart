@@ -30,7 +30,7 @@ class Lawyer {
       id: map['id'] as int,
       name: map['name'] as String,
       contact: map['contact'] as String,
-      emailId: map['emailId'] as String,
+      emailId: map['email_id'] as String,
       uid: map['uid'] as String,
     );
   }

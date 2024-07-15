@@ -125,8 +125,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               TextFormField(
                                 controller: _badgeController,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(),
+                                // keyboardType:
+                                //     const TextInpu(),
                                 decoration: InputDecoration(
                                   hintText: 'Enter Badge',
                                   hintStyle: TextStyle(

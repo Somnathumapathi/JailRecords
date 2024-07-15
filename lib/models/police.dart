@@ -2,7 +2,7 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Police {
-  final String id;
+  final int id;
   final String name;
   final String badge;
   final String uid;
@@ -24,7 +24,7 @@ class Police {
 
   factory Police.fromMap(Map<String, dynamic> map) {
     return Police(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       badge: map['badge'] as String,
       uid: map['uid'] as String,

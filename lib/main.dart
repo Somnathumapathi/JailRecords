@@ -1,8 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:jailerecord/features/auth/screens/signup.dart';
+import 'package:jailerecord/features/auth/screens/signin.dart';
 import 'package:jailerecord/features/police/screens/policeHome.dart';
+import 'package:jailerecord/provider/laywerProvider.dart';
+import 'package:jailerecord/provider/policeProvider.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => LawyerProvider()),
+    ChangeNotifierProvider(create: (context) => PoliceProvider())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

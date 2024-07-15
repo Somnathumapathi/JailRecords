@@ -126,4 +126,3 @@ class _LawyerHomeState extends State<LawyerHome> {
     );
   }
 }
-

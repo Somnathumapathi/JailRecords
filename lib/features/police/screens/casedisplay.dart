@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:jailerecord/models/case.dart';
 
 class CaseDetailsPage extends StatelessWidget {
-  final Map<String, dynamic> caseData;
-  final int caseIndex;
+  // final Map<String, dynamic> caseData;
+  final Case caseData;
 
-  const CaseDetailsPage({required this.caseData, required this.caseIndex});
+  const CaseDetailsPage({required this.caseData});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Case Details', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Case Details',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Color.fromARGB(255, 83, 135, 232),
       ),
       body: Padding(
@@ -20,7 +24,7 @@ class CaseDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Case $caseIndex Details',
+                'Case ${caseData.caseId} Details',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -28,16 +32,21 @@ class CaseDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              _buildDetailRow('Prisoner Name', caseData['Prisoners']['name']),
-              _buildDetailRow('Prisoner Status', caseData['Prisoners']['status'].toString()),
-              _buildDetailRow('Court Name', caseData['Court']['name']),
-              _buildDetailRow('Court Location', caseData['Court']['location']),
-              _buildDetailRow('Police Name', caseData['Police']['name']),
-              _buildDetailRow('Police Badge', caseData['Police']['badge']),
-              _buildDetailRow('Lawyer Name', caseData['Lawyer']['name']),
-              _buildDetailRow('Lawyer Contact', caseData['Lawyer']['contact']),
-              _buildDetailRow('Lawyer Email', caseData['Lawyer']['email_id']),
-              _buildDetailRow('Documents', caseData['documents']),
+              _buildDetailRow('Prisoner Name', caseData.prisoner.name),
+              _buildDetailRow(
+                  'Prisoner Status',
+                  caseData.prisoner.status == false
+                      ? 'Released'
+                      : 'Imprisoned'),
+              _buildDetailRow('Court Name', caseData.court.name),
+              _buildDetailRow('Court Location', caseData.court.location),
+              _buildDetailRow('Police Name', caseData.police.name),
+              _buildDetailRow('Police Badge', caseData.police.badge),
+              _buildDetailRow('Lawyer Name', caseData.lawyer?.name ?? '--'),
+              _buildDetailRow(
+                  'Lawyer Contact', caseData.lawyer?.contact ?? '--'),
+              _buildDetailRow('Lawyer Email', caseData.lawyer?.emailId ?? '--'),
+              _buildDetailRow('Documents', caseData.documents),
             ],
           ),
         ),

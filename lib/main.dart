@@ -21,7 +21,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -31,12 +31,18 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   late SharedPreferences prefs;
   String? role;
+  _init() async {
+    final prefs = await SharedPreferences.getInstance();
+    role = await prefs.getString('role');
+  }
+
   @override
   void initState() {
     // prefs = await SharedPreferences.getInstance();
-    
+    _init();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -60,7 +66,11 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SigninScreen(),
+      home: FirebaseAuth.instance.currentUser != null
+          ? role == 'police'
+              ? PoliceHome()
+              : LawyerHome()
+          : SigninScreen(),
     );
   }
 }

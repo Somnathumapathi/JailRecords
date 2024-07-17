@@ -77,6 +77,7 @@ class AuthService {
               print(res.body);
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('uid', uid);
+              await prefs.setString('role', jsonDecode(res.body)['role']);
               if (jsonDecode(res.body)['role'] == 'police') {
                 final police = Police.fromMap(jsonDecode(res.body)['data'][0]);
                 Provider.of<PoliceProvider>(context, listen: false)
@@ -101,7 +102,11 @@ class AuthService {
 
   static void signOut({required BuildContext context}) {
     FirebaseAuth.instance.signOut();
-    Navigator.popUntil(context, (route) => false,);
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> SigninScreen()));
+    Navigator.popUntil(
+      context,
+      (route) => false,
+    );
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SigninScreen()));
   }
 }

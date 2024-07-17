@@ -14,21 +14,30 @@ class PoliceHome extends StatefulWidget {
 }
 
 class _PoliceHomeState extends State<PoliceHome> {
+  List<Case>? allCases = [];
+  bool isLoading = true;
 
-  
+  getAllCases() async {
+    try {
+      final fetchedCases = await PoliceServices.getAllCases(context: context);
+      setState(() {
+        allCases = fetchedCases;
+        print(allCases);
+        isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     getAllCases();
     super.initState();
   }
 
-  List<Case>? allCases;
-getAllCases()async {
-  allCases = await PoliceServices.getAllCases(context: context);
-  setState(() {
-    
-  });
-}
   final Map<String, dynamic> _jsonData = {
     "msg": "Successful",
     "data": [
@@ -98,72 +107,77 @@ getAllCases()async {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cases', style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
-        backgroundColor: Color.fromARGB(255, 83, 135, 232),
-        actions: [TextButton.icon(onPressed: () {
-          AuthService.signOut(context: context);
-        }, label: Text('Sign Out'), icon: Icon(Icons.exit_to_app),)]
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: cases.length,
-          itemBuilder: (context, index) {
-            var caseData = cases[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 1.0),
-                borderRadius: BorderRadius.circular(6.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 5),
+          title: const Text('Police - Cases',
+              style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
+          backgroundColor: Color.fromARGB(255, 83, 135, 232),
+          actions: [
+            TextButton.icon(
+              onPressed: () {
+                AuthService.signOut(context: context);
+              },
+              label: Text('Sign Out'),
+              icon: Icon(Icons.exit_to_app),
+            )
+          ]),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : allCases != null
+              ? Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: allCases!.length,
+                    itemBuilder: (context, index) {
+                      var caseData = allCases![index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black, width: 1.0),
+                          borderRadius: BorderRadius.circular(6.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: ListTile(
+                          title: Text(
+                            'Case ${caseData.caseId}:',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          subtitle:
+                              Text('Prisoner name: ${caseData.prisoner.name}'),
+                          trailing: const Icon(Icons.arrow_forward,
+                              color: Colors.black),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CaseDetailsPage(caseData: caseData),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
-                ],
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ListTile(
-                title: Text(
-                  'Case ${index + 1}: ${caseData['Prisoners']['name']}',
-                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-                trailing: const Icon(Icons.arrow_forward, color: Colors.black),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CaseDetailsPage(
-                          caseData: caseData, caseIndex: index + 1),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
-      floatingActionButton: Container(
-        alignment: Alignment.bottomCenter,
-        padding: const EdgeInsets.only(bottom: 30.0),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddForm()));
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 83, 135, 232),
-            padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 16),
-          ),
-          child: const Text(
-            'Add Case',
-            style: TextStyle(fontSize: 18, color: Colors.white),
-          ),
-        ),
+                )
+              : Center(child: Text('No cases found')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddForm()));
+        },
+        child: Icon(Icons.add),
       ),
       backgroundColor: Colors.white,
     );
   }
 }
-

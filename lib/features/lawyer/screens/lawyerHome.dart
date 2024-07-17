@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jailerecord/features/auth/services/auth_service.dart';
 import 'package:jailerecord/features/police/screens/casedisplay.dart';
+import 'package:jailerecord/models/case.dart';
+
+import '../../police/services/policeservices.dart';
 
 class LawyerHome extends StatefulWidget {
   const LawyerHome({super.key});
@@ -10,6 +13,30 @@ class LawyerHome extends StatefulWidget {
 }
 
 class _LawyerHomeState extends State<LawyerHome> {
+  List<Case>? allCases = [];
+  bool isLoading = true;
+
+  getAllCases() async {
+    try {
+      final fetchedCases = await PoliceServices.getAllCases(context: context);
+      setState(() {
+        allCases = fetchedCases;
+        print(allCases);
+        isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getAllCases();
+    super.initState();
+  }
+
   final Map<String, dynamic> _jsonData = {
     "msg": "Successful",
     "data": [
@@ -79,53 +106,70 @@ class _LawyerHomeState extends State<LawyerHome> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cases', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Lawyer - Cases', style: TextStyle(color: Colors.white)),
         backgroundColor: Color.fromARGB(255, 83, 135, 232),
-        actions: [TextButton.icon(onPressed: () {
-          AuthService.signOut(context: context);
-        }, label: Text('Sign Out'), icon: Icon(Icons.exit_to_app),)],
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              AuthService.signOut(context: context);
+            },
+            label: Text('Sign Out'),
+            icon: Icon(Icons.exit_to_app),
+          )
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: cases.length,
-          itemBuilder: (context, index) {
-            var caseData = cases[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 1.0),
-                borderRadius: BorderRadius.circular(6.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 5),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : allCases != null
+              ? Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: allCases!.length,
+                    itemBuilder: (context, index) {
+                      var caseData = allCases![index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black, width: 1.0),
+                          borderRadius: BorderRadius.circular(6.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: ListTile(
+                          title: Text(
+                            'Case ${caseData.caseId}:',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          subtitle:
+                              Text('Prisoner name: ${caseData.prisoner.name}'),
+                          trailing: const Icon(Icons.arrow_forward,
+                              color: Colors.black),
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => CaseDetailsPage(
+                            //         caseData: ,),
+                            //   ),
+                            // );
+                          },
+                        ),
+                      );
+                    },
                   ),
-                ],
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ListTile(
-                title: Text(
-                  'Case ${index + 1}: ${caseData['Prisoners']['name']}',
-                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-                trailing: const Icon(Icons.arrow_forward, color: Colors.black),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CaseDetailsPage(
-                          caseData: caseData, caseIndex: index + 1),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
+                )
+              : Center(child: Text('No cases found')),
       backgroundColor: Colors.white,
     );
   }

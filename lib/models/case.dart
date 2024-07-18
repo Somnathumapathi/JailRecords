@@ -15,15 +15,16 @@ class Case {
   Court court;
   Prisoner prisoner;
   Jail? jail;
-  Case({
-    this.caseId,
-    this.documents,
-    required this.police,
-    this.lawyer,
-    required this.court,
-    required this.prisoner,
-    this.jail,
-  });
+  bool? closed;
+  Case(
+      {this.caseId,
+      this.documents,
+      required this.police,
+      this.lawyer,
+      required this.court,
+      required this.prisoner,
+      this.jail,
+      this.closed});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -38,19 +39,20 @@ class Case {
 
   factory Case.fromJson(Map<String, dynamic> map) {
     return Case(
-      caseId: map['id'] != null ? map['id'] as int : 1,
-      documents:
-          map['documents'] != null ? List<String>.from(map['documents']) : null,
-      police: Police.fromMap(map['Police'] as Map<String, dynamic>),
-      lawyer: map['Lawyer'] != null
-          ? Lawyer.fromMap(map['Lawyer'] as Map<String, dynamic>)
-          : null,
-      court: Court.fromJson(map['Court'] as Map<String, dynamic>),
-      prisoner: Prisoner.fromJson(map['Prisoners'] as Map<String, dynamic>),
-      jail: map['Jail'] != null
-          ? Jail.fromJson(map['Jail'] as Map<String, dynamic>)
-          : null,
-    );
+        caseId: map['id'] != null ? map['id'] as int : 1,
+        documents: map['documents'] != null
+            ? List<String>.from(map['documents'])
+            : null,
+        police: Police.fromMap(map['Police'] as Map<String, dynamic>),
+        lawyer: map['Lawyer'] != null
+            ? Lawyer.fromMap(map['Lawyer'] as Map<String, dynamic>)
+            : null,
+        court: Court.fromJson(map['Court'] as Map<String, dynamic>),
+        prisoner: Prisoner.fromJson(map['Prisoners'] as Map<String, dynamic>),
+        jail: map['Jail'] != null
+            ? Jail.fromJson(map['Jail'] as Map<String, dynamic>)
+            : null,
+        closed: map['closed'] != null ? map['closed'] : null);
   }
 
   String toJson() => json.encode(toMap());

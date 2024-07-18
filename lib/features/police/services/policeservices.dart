@@ -90,4 +90,24 @@ class PoliceServices {
       showSnackBar(context, e.toString());
     }
   }
+
+  static void closeCase(
+      {required BuildContext context,
+      required int caseId,
+      required bool isImprisoned}) async {
+    try {
+      final res = await http.patch(Uri.parse('$uri/updateCaseStatus'),
+          headers: {'Content-Type': 'application/json; charset=UTF-8'},
+          body: jsonEncode({'case_id': caseId, 'isImprisoned': isImprisoned}));
+      httpHandler(
+          res: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, 'Case Closed Successfully');
+          });
+    } catch (e) {
+      print(e.toString());
+      showSnackBar(context, e.toString());
+    }
+  }
 }

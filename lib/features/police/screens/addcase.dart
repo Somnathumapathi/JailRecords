@@ -100,22 +100,22 @@ class _AddFormState extends State<AddForm> {
                       controller: _lawyerIdController,
                       decoration: const InputDecoration(labelText: 'Lawyer ID'),
                       keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a lawyer ID';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter a lawyer ID';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     TextFormField(
                       controller: _documentsController,
                       decoration: const InputDecoration(labelText: 'Documents'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter documents';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter documents';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     // TextFormField(
                     //   controller: _policeIdController,

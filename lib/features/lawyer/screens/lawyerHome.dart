@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jailerecord/features/auth/services/auth_service.dart';
-import 'package:jailerecord/features/police/screens/casedisplay.dart';
+import 'package:jailerecord/features/lawyer/screens/casedisplay.dart';
 import 'package:jailerecord/models/case.dart';
 
 import '../../police/services/policeservices.dart';
@@ -156,13 +156,13 @@ class _LawyerHomeState extends State<LawyerHome> {
                           trailing: const Icon(Icons.arrow_forward,
                               color: Colors.black),
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => CaseDetailsPage(
-                            //         caseData: ,),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CaseDetailsPage(caseData: caseData),
+                              ),
+                            );
                           },
                         ),
                       );

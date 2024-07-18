@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jailerecord/features/lawyer/services/lawyerSrevices.dart';
 import 'package:jailerecord/models/case.dart';
+import 'package:jailerecord/provider/laywerProvider.dart';
+import 'package:provider/provider.dart';
 
 class CaseDetailsPage extends StatelessWidget {
   // final Map<String, dynamic> caseData;
@@ -57,14 +60,24 @@ class CaseDetailsPage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 30.0),
         child: ElevatedButton(
           onPressed: () {
-            // onclick
+            LawyerServices.joinCase(
+                context: context,
+                caseId: caseData.caseId!,
+                lawyerId: Provider.of<LawyerProvider>(context, listen: false)
+                    .laywer
+                    .id);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(255, 83, 135, 232),
             padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 16),
           ),
-          child: const Text(
-            'Add Document',
+          child: Text(
+            caseData.lawyer!.id ==
+                    Provider.of<LawyerProvider>(context, listen: false)
+                        .laywer
+                        .id
+                ? 'Add Document'
+                : 'Join Case',
             style: TextStyle(fontSize: 18, color: Colors.white),
           ),
         ),

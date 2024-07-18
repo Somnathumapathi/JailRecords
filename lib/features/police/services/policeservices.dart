@@ -52,8 +52,9 @@ class PoliceServices {
           res: res,
           context: context,
           onSuccess: () {
+            print(res.body);
             showSnackBar(context,
-                'Prisoner successfully created with id: ${jsonDecode(res.body)['data']['id']}');
+                'Prisoner successfully created with id: ${jsonDecode(res.body)['data'][0]['id']}');
           });
     } catch (e) {
       print(e.toString());

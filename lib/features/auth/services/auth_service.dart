@@ -86,6 +86,7 @@ class AuthService {
                     MaterialPageRoute(builder: (context) => PoliceHome()));
               } else if (jsonDecode(res.body)['role'] == 'lawyer') {
                 final lawyer = Lawyer.fromMap(jsonDecode(res.body)['data'][0]);
+                print(lawyer.id);
                 Provider.of<LawyerProvider>(context, listen: false)
                     .setLawyer(lawyer);
                 Navigator.push(context,
@@ -100,6 +101,9 @@ class AuthService {
     }
   }
 
+  static void getUser({
+    required BuildContext context,
+  }) async {}
   static void signOut({required BuildContext context}) {
     FirebaseAuth.instance.signOut();
     Navigator.popUntil(

@@ -34,6 +34,11 @@ class _MyAppState extends State<MyApp> {
   _init() async {
     final prefs = await SharedPreferences.getInstance();
     role = await prefs.getString('role');
+    // if (role != null) {
+    //   if (role == 'lawyer') {
+    //     Provider.of<LawyerProvider>(context)
+    //   }
+    // }
   }
 
   @override

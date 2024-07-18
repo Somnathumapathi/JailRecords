@@ -9,7 +9,7 @@ import 'package:jailerecord/models/prisoner.dart';
 
 class Case {
   int? caseId;
-  String? documents;
+  List<String>? documents;
   Police police;
   Lawyer? lawyer;
   Court court;
@@ -39,7 +39,8 @@ class Case {
   factory Case.fromJson(Map<String, dynamic> map) {
     return Case(
       caseId: map['id'] != null ? map['id'] as int : 1,
-      documents: map['documents'],
+      documents:
+          map['documents'] != null ? List<String>.from(map['documents']) : null,
       police: Police.fromMap(map['Police'] as Map<String, dynamic>),
       lawyer: map['Lawyer'] != null
           ? Lawyer.fromMap(map['Lawyer'] as Map<String, dynamic>)

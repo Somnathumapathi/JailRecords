@@ -81,6 +81,10 @@ class _LawyerHomeState extends State<LawyerHome> {
     }
   }
 
+  // getuser() async {
+  //   AuthService.getUser(context: context);
+  // }
+
   getAllCases() async {
     try {
       final fetchedCases = await PoliceServices.getAllCases(context: context);
@@ -99,77 +103,16 @@ class _LawyerHomeState extends State<LawyerHome> {
   @override
   void initState() {
     // AuthService.
-    // Provider.of<LawyerProvider>(context).
+    print(Provider.of<LawyerProvider>(context, listen: false).laywer.name);
+    // getuser();
     getAllCases();
     super.initState();
   }
 
-  final Map<String, dynamic> _jsonData = {
-    "msg": "Successful",
-    "data": [
-      {
-        "documents": "gmeet",
-        "Prisoners": {"name": "something", "status": true},
-        "Court": {
-          "id": 3,
-          "name": "Karnataka High Court",
-          "location": "Bangalore"
-        },
-        "Police": {"id": 1, "uid": "ok123", "name": "sampee", "badge": "seri"},
-        "Lawyer": {
-          "id": 1,
-          "uid": "ramesh_naidu",
-          "name": "Koushik",
-          "contact": "ulalaulala",
-          "email_id": "ninajjigandusuleghuttdulemunde"
-        }
-      },
-      {
-        "documents": "mallika.s",
-        "Prisoners": {"name": "Suman Prasad", "status": true},
-        "Court": {"id": 2, "name": "Bombay High Court", "location": "Mumbai"},
-        "Police": {"id": 1, "uid": "ok123", "name": "sampee", "badge": "seri"},
-        "Lawyer": {
-          "id": 1,
-          "uid": "ramesh_naidu",
-          "name": "Koushik",
-          "contact": "ulalaulala",
-          "email_id": "ninajjigandusuleghuttdulemunde"
-        }
-      },
-      {
-        "documents": "mallika.s",
-        "Prisoners": {"name": "Suman Prasad", "status": true},
-        "Court": {"id": 2, "name": "Bombay High Court", "location": "Mumbai"},
-        "Police": {"id": 1, "uid": "ok123", "name": "sampee", "badge": "seri"},
-        "Lawyer": {
-          "id": 1,
-          "uid": "ramesh_naidu",
-          "name": "Koushik",
-          "contact": "ulalaulala",
-          "email_id": "ninajjigandusuleghuttdulemunde"
-        }
-      },
-      {
-        "documents": "mallika.s",
-        "Prisoners": {"name": "Suman Prasad", "status": true},
-        "Court": {"id": 2, "name": "Bombay High Court", "location": "Mumbai"},
-        "Police": {"id": 1, "uid": "ok123", "name": "sampee", "badge": "seri"},
-        "Lawyer": {
-          "id": 1,
-          "uid": "ramesh_naidu",
-          "name": "Koushik",
-          "contact": "ulalaulala",
-          "email_id": "ninajjigandusuleghuttdulemunde"
-        }
-      }
-    ]
-  };
-
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> cases =
-        List<Map<String, dynamic>>.from(_jsonData['data']);
+    // List<Map<String, dynamic>> cases =
+    //     List<Map<String, dynamic>>.from(_jsonData['data']);
     final _scWidth = MediaQuery.of(context).size.width;
     final _scHeight = MediaQuery.of(context).size.height;
 

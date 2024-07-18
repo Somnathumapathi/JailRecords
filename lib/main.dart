@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jailerecord/features/auth/screens/signup.dart';
 import 'package:jailerecord/features/auth/screens/signin.dart';
+import 'package:jailerecord/features/auth/services/auth_service.dart';
 import 'package:jailerecord/features/lawyer/screens/lawyerHome.dart';
 import 'package:jailerecord/features/police/screens/policeHome.dart';
 import 'package:jailerecord/provider/laywerProvider.dart';
@@ -34,10 +35,18 @@ class _MyAppState extends State<MyApp> {
   _init() async {
     final prefs = await SharedPreferences.getInstance();
     role = await prefs.getString('role');
+    AuthService.getUser(
+      context: context,
+    );
+
+    // print(Provider.of<>(context))
     // if (role != null) {
-    //   if (role == 'lawyer') {
-    //     Provider.of<LawyerProvider>(context)
-    //   }
+    if (role == 'lawyer') {
+      print(
+          'jjjjjjjjjjjjjjjjjjjjjjjj ${Provider.of<LawyerProvider>(context, listen: false).laywer.id}');
+    } else if (role == 'police') {
+      print(Provider.of<PoliceProvider>(context, listen: false).police.id);
+    }
     // }
   }
 

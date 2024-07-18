@@ -103,7 +103,43 @@ class AuthService {
 
   static void getUser({
     required BuildContext context,
-  }) async {}
+  }) async {
+    try {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      http.Response res = await http.get(Uri.parse('$uri/getUser?uid=$uid'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
+      httpHandler(
+          res: res,
+          context: context,
+          onSuccess: () async {
+            print(res.body);
+            // final prefs = await SharedPreferences.getInstance();
+            // await prefs.setString('uid', uid);
+            // await prefs.setString('role', jsonDecode(res.body)['role']);
+            if (jsonDecode(res.body)['role'] == 'police') {
+              final police = Police.fromMap(jsonDecode(res.body)['data'][0]);
+              Provider.of<PoliceProvider>(context, listen: false)
+                  .setPolice(police);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PoliceHome()));
+            } else if (jsonDecode(res.body)['role'] == 'lawyer') {
+              final lawyer = Lawyer.fromMap(jsonDecode(res.body)['data'][0]);
+              print(lawyer.id);
+              Provider.of<LawyerProvider>(context, listen: false)
+                  .setLawyer(lawyer);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LawyerHome()));
+            }
+
+            // showSnackBar(context, 'Successful');
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
   static void signOut({required BuildContext context}) {
     FirebaseAuth.instance.signOut();
     Navigator.popUntil(

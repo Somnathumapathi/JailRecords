@@ -52,4 +52,27 @@ class LawyerServices {
       showSnackBar(context, e.toString());
     }
   }
+
+  static void addDocument(
+      {required BuildContext context,
+      required String docUrl,
+      required int caseId}) async {
+    try {
+      print(jsonEncode({"case_id": caseId, "doc_url": docUrl}));
+      final res = await http.patch(Uri.parse('$uri/addDocument'),
+          headers: {'Content-Type': 'application/json; charset=UTF-8'},
+          body: jsonEncode({"case_id": caseId, "url": "$docUrl"}));
+      print(res.body);
+      httpHandler(
+          res: res,
+          context: context,
+          onSuccess: () {
+            Navigator.pop(context);
+            showSnackBar(context, 'Added successfully');
+          });
+    } catch (e) {
+      print(e.toString());
+      showSnackBar(context, e.toString());
+    }
+  }
 }

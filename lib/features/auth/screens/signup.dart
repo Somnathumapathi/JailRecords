@@ -21,7 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final _scwidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.black,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -64,7 +64,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 margin: const EdgeInsets.all(20),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 81, 100, 207),
+                    color: Color.fromARGB(255, 53, 53, 53),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

@@ -24,7 +24,7 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
           'Case Details',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Color.fromARGB(255, 83, 135, 232),
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -39,7 +39,7 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: Colors.black,
                     ),
                   ),
                   Spacer(),
@@ -137,7 +137,7 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
             // onclick
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 83, 135, 232),
+            backgroundColor: Colors.black,
             padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 16),
           ),
           child: const Text(

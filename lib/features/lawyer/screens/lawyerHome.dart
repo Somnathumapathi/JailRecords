@@ -120,7 +120,7 @@ class _LawyerHomeState extends State<LawyerHome> {
       appBar: AppBar(
         title:
             const Text('Lawyer - Cases', style: TextStyle(color: Colors.white)),
-        backgroundColor: Color.fromARGB(255, 83, 135, 232),
+        backgroundColor: Colors.black,
         actions: [
           TextButton.icon(
             onPressed: () {

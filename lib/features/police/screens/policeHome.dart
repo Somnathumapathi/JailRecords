@@ -109,14 +109,20 @@ class _PoliceHomeState extends State<PoliceHome> {
       appBar: AppBar(
           title: const Text('Police - Cases',
               style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
-          backgroundColor: Color.fromARGB(255, 83, 135, 232),
+          backgroundColor: Colors.black,
           actions: [
             TextButton.icon(
               onPressed: () {
                 AuthService.signOut(context: context);
               },
-              label: Text('Sign Out'),
-              icon: Icon(Icons.exit_to_app),
+              label: Text(
+                'Sign Out',
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
             )
           ]),
       body: isLoading
@@ -171,6 +177,8 @@ class _PoliceHomeState extends State<PoliceHome> {
                 )
               : Center(child: Text('No cases found')),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AddForm()));

@@ -7,6 +7,7 @@ import 'package:jailerecord/features/lawyer/services/lawyerSrevices.dart';
 import 'package:jailerecord/models/case.dart';
 import 'package:jailerecord/provider/laywerProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CaseDetailsPage extends StatefulWidget {
   // final Map<String, dynamic> caseData;
@@ -59,7 +60,7 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
           'Case Details',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Color.fromARGB(255, 83, 135, 232),
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -72,7 +73,7 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 20),
@@ -102,12 +103,20 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
                   itemCount: widget.caseData.documents?.length ?? 0,
                   itemBuilder: (context, index) {
                     final link = widget.caseData.documents![index];
-                    return Container(
-                      padding: EdgeInsets.all(5),
-                      // color: const Color.fromARGB(255, 213, 211, 211),
-                      child: Text(
-                        link,
-                        style: TextStyle(color: Colors.blue),
+                    return GestureDetector(
+                      onTap: () async {
+                        print(Uri.parse(link));
+
+                        await launchUrl(Uri.parse(link),
+                            mode: LaunchMode.externalApplication);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        // color: const Color.fromARGB(255, 213, 211, 211),
+                        child: Text(
+                          link,
+                          style: TextStyle(color: Colors.blue),
+                        ),
                       ),
                     );
                   }),
@@ -135,7 +144,7 @@ class _CaseDetailsPageState extends State<CaseDetailsPage> {
                             .id);
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 83, 135, 232),
+            backgroundColor: Colors.black,
             padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 16),
           ),
           child: Text(

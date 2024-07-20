@@ -17,16 +17,15 @@ class _SigninScreenState extends State<SigninScreen> {
     _passwordController.dispose();
     super.dispose();
   }
- 
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPolice = true;
 
-  
   Widget build(BuildContext context) {
     final _scwidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.black,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -69,7 +68,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 margin: const EdgeInsets.all(20),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 81, 100, 207),
+                    color: Color.fromARGB(255, 59, 59, 60),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -110,11 +109,15 @@ class _SigninScreenState extends State<SigninScreen> {
                         color: Colors.white,
                       ),
                     ),
-                   
+                    SizedBox(
+                      height: 20,
+                    ),
                     ElevatedButton(
                         onPressed: () {
-                          AuthService.signin(context: context, email: _emailController.text, password: _passwordController.text);
-                              
+                          AuthService.signin(
+                              context: context,
+                              email: _emailController.text,
+                              password: _passwordController.text);
                         },
                         child: Text('Login')),
                     const SizedBox(
@@ -125,7 +128,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignupScreen  ()),
+                                builder: (context) => SignupScreen()),
                           );
                         },
                         child: const Text(
